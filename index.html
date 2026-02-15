@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <title>醃肉計算器</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      padding: 30px 20px;
+      background-color: #f8f9fa;
+      color: #333;
+      -webkit-user-select: none; /* 防止誤觸選取文字 */
+    }
+    h1 { color: #2c3e50; text-align: center; margin-bottom: 30px; }
+    .input-group { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    label { display: block; margin-bottom: 10px; font-weight: bold; color: #666; }
+    input[type="number"] {
+      width: 100%;
+      padding: 12px;
+      font-size: 1.5rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      box-sizing: border-box; /* 確保寬度包含 padding */
+      outline: none;
+    }
+    input:focus { border-color: #007aff; }
+    .result {
+      margin-top: 25px;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      display: none;
+    }
+    .result p { margin: 12px 0; font-size: 1.2em; border-bottom: 1px solid #eee; padding-bottom: 8px; }
+    .result p:last-child { border-bottom: none; }
+    .value { font-weight: bold; color: #d35400; float: right; }
+  </style>
+</head>
+<body>
+  <h1>醃肉計算器</h1>
+
+  <div class="input-group">
+    <label for="meatInput">請輸入肉量 (g):</label>
+    <input type="number" id="meatInput" placeholder="例如 3000" oninput="calculate()" inputmode="decimal">
+  </div>
+
+  <div class="result" id="resultBox">
+    <p style="color:#7f8c8d; font-size: 0.9em; border:none;">建議添加：</p>
+    <p>亞硝酸鹽 (0.15%) <span class="value"><span id="nitrite">0</span> g</span></p>
+    <p>混合液 (5%) <span class="value"><span id="smokeOil">0</span> g</span></p>
+    <p style="font-size: 0.8em; color: #95a5a6; border:none; margin-top:10px;">* 混合液比例: 燻油1, 老抽1, 鹽1, 水2</p>
+  </div>
+
+  <script>
+    function calculate() {
+      const meatWeight = parseFloat(document.getElementById('meatInput').value);
+      const resultBox = document.getElementById('resultBox');
+
+      if (!isNaN(meatWeight) && meatWeight > 0) {
+        document.getElementById('nitrite').innerText = (meatWeight * 0.0015).toFixed(2);
+        document.getElementById('smokeOil').innerText = (meatWeight * 0.05).toFixed(2);
+        resultBox.style.display = 'block';
+      } else {
+        resultBox.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
